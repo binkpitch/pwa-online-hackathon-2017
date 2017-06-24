@@ -90,8 +90,8 @@ export default class NavMenu extends React.Component {
             Logout
           </Button>
           <Confirm
-            header="ยืนยันการออกจากระบบ?"
-            content={`คุณ ${profile.displayName || ''}`}
+            header="Are you sure you want to sign out?"
+            content={`User: ${profile.displayName || ''}`}
             open={this.state.openDel}
             onCancel={this._cancelLogout}
             onConfirm={this._confirmLogOut}
