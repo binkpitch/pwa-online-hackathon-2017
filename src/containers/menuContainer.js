@@ -14,9 +14,9 @@ const menu = (props) => {
       isActive: props.location.pathname === '/todolist',
       onClick: props.pushTodoList
     }, {
-      name: 'Candidates',
-      isActive: props.location.pathname === '/candidates',
-      onClick: props.pushCandidate
+      name: 'Vote',
+      isActive: props.location.pathname === '/vote',
+      onClick: props.pushVote
     }
   ]
 
@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     pushHomePage: () => dispatch(push('/')),
     pushTodoList: () => dispatch(push('/todolist')),
-    pushCandidate: () => dispatch(push('/candidates'))
+    pushVote: () => dispatch(push('/vote'))
   }
 }
 

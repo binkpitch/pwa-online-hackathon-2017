@@ -1,14 +1,15 @@
 import React from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Icon, Image, Button, List } from 'semantic-ui-react'
 
 const CandidateListComponent = (props) => {
   return (
     <Card.Group>
       {
         props.items.map((item, key) => {
+          console.log('item.policy', item.policy)
           return (
             <Card key={key}>
-              <Image src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/H.E._General_Prayut_Chan-o-cha%2C_Prime_Minister%2C_Kingdom_of_Thailand_%2834148528741%29_cropped.jpg/800px-H.E._General_Prayut_Chan-o-cha%2C_Prime_Minister%2C_Kingdom_of_Thailand_%2834148528741%29_cropped.jpg' />
+              <Image src={item.image} height={300} />
               <Card.Content>
                 <Card.Header>
                   {item.name}
@@ -19,14 +20,29 @@ const CandidateListComponent = (props) => {
                   </span>
                 </Card.Meta>
                 <Card.Description>
-                  {item.vow}
+                  "{item.vow}"
                 </Card.Description>
+              </Card.Content>
+              <Card.Content>
+                <List bulleted>
+                  {
+                    item.policy.map((item1, key2) => (
+                      <List.Item key={key2}>{item1}</List.Item>
+                    ))
+                  }
+                </List>
               </Card.Content>
               <Card.Content extra>
                 <a>
                   <Icon name='user' />
-                  {item.votes}
+                  {item.score || 0} votes
                 </a>
+              </Card.Content>
+              <Card.Content extra>
+                <div className='ui two buttons'>
+                  <Button color='green'>Vote</Button>
+                  <Button color='red'>Report</Button>
+                </div>
               </Card.Content>
             </Card>
           )
