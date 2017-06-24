@@ -13,6 +13,7 @@ class CandidateListContainer extends Component {
     }
     this.onVoteClick = this.onVoteClick.bind(this)
     this.addVoteToFirebase = this.addVoteToFirebase.bind(this)
+    this.addVotersToFirebase = this.addVotersToFirebase.bind(this)
     this.checkIfDuplicateVote = this.checkIfDuplicateVote.bind(this)
     this.handleCloseDuplicateVoteError = this.handleCloseDuplicateVoteError.bind(this)
   }
@@ -49,7 +50,6 @@ class CandidateListContainer extends Component {
         if (snapshot.val()) {
           this.setState({ showDuplicateVoteError: true })
         } else {
-          this.setState({ showNestedVotingModal: true })
           this.addVoteToFirebase(candidateKey, currentUser)
         }
       })
@@ -57,8 +57,8 @@ class CandidateListContainer extends Component {
   }
 
   addVoteToFirebase (candidateKey, currentUser) {
-    const database = Firebase.database()
-    database.ref(`candidates/${candidateKey}`).transaction(candidate => {
+    this.setState({ isSubmittingToFirebase: true })
+    Firebase.database().ref(`candidates/${candidateKey}`).transaction(candidate => {
       if (candidate) {
         if (candidate.score) {
           candidate.score++
@@ -68,14 +68,30 @@ class CandidateListContainer extends Component {
         return candidate
       }
     }).then(() => {
-      const { uid, displayName, email } = currentUser
-      database.ref(`voters/${uid}`).set({
-        uid,
-        isVote: true,
-        dateTime: Moment().format('Do MMMM YYYY, h:mm:ss a'),
-        name: displayName,
-        email: email
-      })
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const geolocation = {
+            lattitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }
+          this.addVotersToFirebase(currentUser, geolocation)
+        }, () => this.addVotersToFirebase(currentUser))
+      } else {
+        this.addVotersToFirebase(currentUser)
+      }
+    })
+  }
+
+  addVotersToFirebase (currentUser, geolocation = {}) {
+    Firebase.database().ref(`voters/${currentUser.uid}`).set({
+      uid: currentUser.uid,
+      isVote: true,
+      dateTime: Moment().format('Do MMMM YYYY, h:mm:ss a'),
+      name: currentUser.displayName,
+      email: currentUser.email,
+      geolocation
+    }).then(() => {
+      this.setState({ showNestedVotingModal: true, isSubmittingToFirebase: false })
     })
   }
 
@@ -93,7 +109,7 @@ class CandidateListContainer extends Component {
         >
         <Header icon='warning circle' content='You already voted.' />
         <Modal.Content>
-          <h3>You can vote only one time</h3>
+          <h3>You can only vote one time</h3>
         </Modal.Content>
         <Modal.Actions>
           <Button color='green' onClick={this.handleCloseDuplicateVoteError} inverted>
@@ -141,8 +157,8 @@ class CandidateListContainer extends Component {
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon onClick={() => this.setState({showVotingModal: false})} color='red'><Icon name='left chevron' /> Cancel</Button>
-          <Button primary icon onClick={() => this.checkIfDuplicateVote(this.state.candidateKey)}>Proceed <Icon name='right chevron' /></Button>
+          <Button icon loading={this.state.isSubmittingToFirebase} onClick={() => this.setState({showVotingModal: false})} color='red'><Icon name='left chevron' /> Cancel</Button>
+          <Button primary icon loading={this.state.isSubmittingToFirebase} onClick={() => this.checkIfDuplicateVote(this.state.candidateKey)}>Proceed <Icon name='right chevron' /></Button>
           <Modal
             dimmer={false}
             open={this.state.showNestedVotingModal}

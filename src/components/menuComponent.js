@@ -90,8 +90,7 @@ export default class NavMenu extends React.Component {
             Logout
           </Button>
           <Confirm
-            header="Are you sure you want to sign out?"
-            content={`Current user is "${profile.displayName || ''}"`}
+            content="Are you sure you want to sign out?"
             open={this.state.openDel}
             onCancel={this._cancelLogout}
             onConfirm={this._confirmLogOut}
@@ -127,6 +126,7 @@ export default class NavMenu extends React.Component {
   }
 
   render () {
+    console.log('this.state.profile', this.state.profile)
     return (
       <Menu>
         <Menu.Item header>{this.props.header}</Menu.Item>
@@ -138,6 +138,15 @@ export default class NavMenu extends React.Component {
           ))
         }
         <Menu.Menu position='right'>
+            {
+              this.state.profile
+              ? (
+                  <Menu.Item>
+                    {this.state.profile.displayName} 
+                  </Menu.Item>
+                )
+              : null
+            }
           <Menu.Item>
             { this._renderAuth() }
           </Menu.Item>

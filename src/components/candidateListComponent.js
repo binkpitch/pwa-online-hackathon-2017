@@ -2,7 +2,6 @@ import React from 'react'
 import { Card, Icon, Image, Button, List, Popup } from 'semantic-ui-react'
 
 const CandidateListComponent = (props) => {
-  const { disabled } = props
   return (
     <Card.Group>
       {
@@ -39,11 +38,11 @@ const CandidateListComponent = (props) => {
               <Card.Content extra>
                 <div className='ui two buttons'>
                   {
-                    disabled
+                    props.disabled
                     ? <Popup
                       trigger={<Button basic color='grey' content='Vote' />}
                       header='Not log in'
-                      content='Please Log to vote.'
+                      content='Please Log in to vote.'
                   />
                   : <Button color='green' onClick={() => props.onVoteClick(item.key, item.name, item.no, item.party)}>Vote</Button>
                   }
