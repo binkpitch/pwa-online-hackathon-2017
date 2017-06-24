@@ -1,0 +1,42 @@
+{
+  "name": "reactor",
+  "version": "1.2.3",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.16.1",
+    "express": "^4.15.3",
+    "prop-types": "^15.5.8",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-jss": "^6.1.1",
+    "react-redux": "^5.0.4",
+    "react-router-redux": "next",
+    "redux": "^3.6.0",
+    "redux-form": "^6.8.0",
+    "redux-saga": "^0.15.0",
+    "semantic-ui-css": "^2.2.10",
+    "semantic-ui-react": "^0.68.5"
+  },
+  "devDependencies": {
+    "enzyme": "^2.8.2",
+    "pre-commit": "^1.2.2",
+    "react-scripts": "1.0.7",
+    "react-test-renderer": "^15.5.4",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-immutable-state-invariant": "^2.0.0",
+    "standard": "^10.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "./node_modules/.bin/standard",
+    "lint-fix": "./node_modules/.bin/standard --fix",
+    "precommit-msg": "echo '\nPre-commit -> Linting with Standard.js \nUse \"--no-verify\" to force commit\n' && exit 0"
+  },
+  "pre-commit": [
+    "precommit-msg",
+    "lint"
+  ]
+}

@@ -1,0 +1,5 @@
+body {
+  /*remove user agent stylesheet which create 8px margin*/
+  padding:0;
+  margin:0;
+}
