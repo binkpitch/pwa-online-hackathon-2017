@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { Component } from 'react'
 import CandidateListComponent from '../components/candidateListComponent'
+import { Dimmer, Loader } from 'semantic-ui-react'
+import Firebase from 'firebase'
 
-const CandidateListContainer = () => {
-  const candidateList = [
-    {
-      name: 'Prayut Chan-o-cha',
-      party: 'Millitary Party',
-      vow: 'Returning happiness to the people',
-      votes: 22
+class CandidateListContainer extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      candidates: []
     }
-  ]
+  }
 
-  return (
-    <CandidateListComponent items={candidateList} />
-  )
+  componentWillMount () {
+    Firebase.database().ref('candidates').on('value', (snapshot) => {
+      const candidates = Object.values(snapshot.val())
+      this.setState({candidates})
+    })
+  }
+
+  render () {
+    return (
+      <div>
+        <Dimmer active={this.state.candidates.length === 0} inverted>
+          <Loader content='Loading' />
+        </Dimmer>
+        <CandidateListComponent items={this.state.candidates} />
+      </div>
+    )
+  }
 }
-
 export default CandidateListContainer
