@@ -5,17 +5,18 @@ import Menu from '../components/menuComponent'
 
 const menu = (props) => {
   const items = [
+    // {
+    //   name: 'Home Page',
+    //   isActive: props.location.pathname === '/',
+    //   onClick: props.pushHomePage
+    // }, {
+    //   name: 'Todo List',
+    //   isActive: props.location.pathname === '/todolist',
+    //   onClick: props.pushTodoList
+    // },
     {
-      name: 'Home Page',
-      isActive: props.location.pathname === '/',
-      onClick: props.pushHomePage
-    }, {
-      name: 'Todo List',
-      isActive: props.location.pathname === '/todolist',
-      onClick: props.pushTodoList
-    }, {
       name: 'Vote',
-      isActive: props.location.pathname === '/vote',
+      isActive: props.location.pathname === '/',
       onClick: props.pushVote
     }
   ]
@@ -27,9 +28,9 @@ const menu = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    pushHomePage: () => dispatch(push('/')),
-    pushTodoList: () => dispatch(push('/todolist')),
-    pushVote: () => dispatch(push('/vote'))
+    // pushHomePage: () => dispatch(push('/')),
+    // pushTodoList: () => dispatch(push('/todolist')),
+    pushVote: () => dispatch(push('/'))
   }
 }
 
