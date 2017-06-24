@@ -6,16 +6,8 @@ import Menu from '../components/menuComponent'
 const menu = (props) => {
   const items = [
     {
-      name: 'Home Page',
-      isActive: props.location.pathname === '/',
-      onClick: props.pushHomePage
-    }, {
-      name: 'Todo List',
-      isActive: props.location.pathname === '/todolist',
-      onClick: props.pushTodoList
-    }, {
       name: 'Vote',
-      isActive: props.location.pathname === '/vote',
+      isActive: props.location.pathname === '/',
       onClick: props.pushVote
     }
   ]
