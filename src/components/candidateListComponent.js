@@ -5,9 +5,9 @@ const CandidateListComponent = (props) => {
   return (
     <Card.Group>
       {
-        props.items.map((item) => {
+        props.items.map((item, key) => {
           return (
-            <Card>
+            <Card key={key}>
               <Image src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/H.E._General_Prayut_Chan-o-cha%2C_Prime_Minister%2C_Kingdom_of_Thailand_%2834148528741%29_cropped.jpg/800px-H.E._General_Prayut_Chan-o-cha%2C_Prime_Minister%2C_Kingdom_of_Thailand_%2834148528741%29_cropped.jpg' />
               <Card.Content>
                 <Card.Header>

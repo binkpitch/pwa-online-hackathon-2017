@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 
 const menu = (props) => {
   return (
@@ -12,6 +12,15 @@ const menu = (props) => {
           </Menu.Item>
         ))
       }
+      <Menu.Menu position='right'>
+        <Menu.Item>
+          <Button primary>Sign up</Button>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Button>Log-in</Button>
+        </Menu.Item>
+      </Menu.Menu>
     </Menu>
   )
 }
