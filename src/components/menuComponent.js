@@ -1,8 +1,12 @@
 import React from 'react'
-import { Menu, Button, Popup } from 'semantic-ui-react'
+import { Button, Confirm, Menu, Popup } from 'semantic-ui-react'
 import Firebase from 'firebase'
-const provider = new Firebase.auth.FacebookAuthProvider()
-provider.setCustomParameters({
+
+const providerGoogle = new Firebase.auth.GoogleAuthProvider();
+
+// Facebook
+const providerFacebook = new Firebase.auth.FacebookAuthProvider()
+providerFacebook.setCustomParameters({
   'display': 'popup'
 })
 
@@ -18,36 +22,59 @@ export default class NavMenu extends React.Component {
     super(props)
 
     this.state = {
-      profile: null
+      profile: null,
+      openDel: false
     }
   }
 
   componentDidMount() {
-    this.setState({
-      profile: JSON.parse(localStorage.getItem('profile'))
-    })
+    Firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          profile: user
+        })
+      }
+    });
   }
 
-  _onClickFb = () => {
-    Firebase.auth().signInWithPopup(provider).then((result) => {
-      localStorage.setItem('profile', JSON.stringify(result.user))
-      this.setState({
-        profile: result.user
-      })
+  _onClickGoogle = () => {
+    Firebase.auth().signInWithPopup(providerGoogle).then((result) => {
+      console.log('Login google success: ')
+    }).catch(function(error) {
+      console.log('Login google errors: ', error)
+    });
+  }
+
+  _onClickFacebook = () => {
+    Firebase.auth().signInWithPopup(providerFacebook).then((result) => {
+      console.log('Login facebook success: ')
     }).catch(function(error) {
       console.log('Login facebook errors: ', error)
     });
   }
 
   _onClickLogOut = () => {
+    this.setState({
+      openDel: true
+    })
+  }
+
+  _confirmLogOut = () => {
     Firebase.auth().signOut().then(() => {
       localStorage.setItem('profile', null)
       this.setState({
-        profile: null
+        profile: null,
+        openDel: false
       })
     }).catch(function(error) {
       console.log('Logout errors: ', error)
     });
+  }
+
+  _cancelLogout = () => {
+    this.setState({
+      openDel: false
+    })
   }
 
   _renderAuth() {
@@ -55,12 +82,21 @@ export default class NavMenu extends React.Component {
 
     if(profile) {
       return (
-        <Button
-          color='red'
-          onClick={this._onClickLogOut}
-        >
-          Logout
-        </Button>
+        <div>
+          <Button
+            color='red'
+            onClick={this._onClickLogOut}
+          >
+            Logout
+          </Button>
+          <Confirm
+            header="ยืนยันการออกจากระบบ?"
+            content={`คุณ ${profile.displayName || ''}`}
+            open={this.state.openDel}
+            onCancel={this._cancelLogout}
+            onConfirm={this._confirmLogOut}
+          />
+        </div>
       )
     } else {
       return (
@@ -68,9 +104,11 @@ export default class NavMenu extends React.Component {
           <div className='flex1 margin-bottom-10'>
             <Button
               color='red'
-              content='Google Plus'
-              icon='google plus'
+              content='Google'
+              icon='google'
+              labelPosition='left'
               className='flex1'
+              onClick={this._onClickGoogle}
             />
           </div>
           <div className='flex1'>
@@ -78,8 +116,9 @@ export default class NavMenu extends React.Component {
               color='blue'
               content='Facebook'
               icon='facebook'
+              labelPosition='left'
               className='flex1'
-              onClick={this._onClickFb}
+              onClick={this._onClickFacebook}
             />
           </div>
         </Popup>
