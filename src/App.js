@@ -14,6 +14,7 @@ import Menu from './containers/menuContainer'
 // import your pages here
 import HomePage from './pages/homePage'
 import TodoListPage from './pages/todoListPage'
+import CandidatesPage from './pages/candidatesPage'
 
 class App extends Component {
   constructor (props) {
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path='/' component={Menu} />
           <Route exact path='/' component={HomePage} />
           <Route path='/todolist' component={TodoListPage} />
+          <Route path='/candidates' component={CandidatesPage} />
         </div>
       </ConnectedRouter>
     )
