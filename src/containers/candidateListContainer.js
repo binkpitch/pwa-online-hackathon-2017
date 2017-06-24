@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CandidateListComponent from '../components/candidateListComponent'
-import { Dimmer, Loader, Modal, Header, Icon, Button, Segment, List } from 'semantic-ui-react'
+import { Dimmer, Loader, Modal, Header, Icon, Button, Segment } from 'semantic-ui-react'
 import Firebase from 'firebase'
 import Moment from 'moment'
 
