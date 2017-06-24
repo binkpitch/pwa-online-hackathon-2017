@@ -26,15 +26,6 @@ const firebaseConfig = {
   messagingSenderId: '388721314773'
 }
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDU3HxQOtgg0chbgVKd5RbrmiZNTCvcqYQ',
-  authDomain: 'pwa-online-hackathon-2017.firebaseapp.com',
-  databaseURL: 'https://pwa-online-hackathon-2017.firebaseio.com',
-  projectId: 'pwa-online-hackathon-2017',
-  storageBucket: 'pwa-online-hackathon-2017.appspot.com',
-  messagingSenderId: '388721314773'
-}
-
 class App extends Component {
   constructor (props) {
     super(props)
