@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import CandidateListComponent from '../components/candidateListComponent'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import Firebase from 'firebase'
@@ -8,16 +7,24 @@ class CandidateListContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      candidates: []
+      candidates: [],
+      currentUser: null
     }
   }
 
-  componentWillMount () {
+  componentDidMount () {
     Firebase.database().ref('candidates').on('value', (snapshot) => {
       const candidates = Object.values(snapshot.val())
       this.setState({candidates})
     })
-    console.log('Firebase.auth().currentUser', Firebase.auth().currentUser)
+
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({currentUser: user})
+      } else {
+        this.setState({currentUser: null})
+      }
+    })
   }
 
   onVoteClick (candidateKey) {
@@ -31,6 +38,8 @@ class CandidateListContainer extends Component {
           }
           return candidate
         }
+      }).then(() => {
+        // update voters
       })
     }
   }
@@ -41,16 +50,10 @@ class CandidateListContainer extends Component {
         <Dimmer active={this.state.candidates.length === 0} inverted>
           <Loader content='Loading' />
         </Dimmer>
-        <CandidateListComponent items={this.state.candidates} onVoteClick={this.onVoteClick} disabled={!Firebase.auth().currentUser} />
+        <CandidateListComponent items={this.state.candidates} onVoteClick={this.onVoteClick} disabled={!this.state.currentUser} />
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-
-  }
-}
-
-export default connect(mapStateToProps)(CandidateListContainer)
+export default CandidateListContainer
