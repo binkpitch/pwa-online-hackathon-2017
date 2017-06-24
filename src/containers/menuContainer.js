@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     pushHomePage: () => dispatch(push('/')),
     pushTodoList: () => dispatch(push('/todolist')),
-    pushCandidate: () => dispatch(push('/candidatelist'))
+    pushCandidate: () => dispatch(push('/candidates'))
   }
 }
 
