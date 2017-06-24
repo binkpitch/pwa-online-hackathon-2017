@@ -38,6 +38,8 @@ class App extends Component {
       <ConnectedRouter history={routerHistory}>
         <div>
           <Route path='/' component={Menu} />
+          {/* <Route exact path='/' component={HomePage} />
+          <Route path='/todolist' component={TodoListPage} /> */}
           <Route path='/' component={VotePage} />
         </div>
       </ConnectedRouter>

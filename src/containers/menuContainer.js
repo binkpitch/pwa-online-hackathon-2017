@@ -5,6 +5,15 @@ import Menu from '../components/menuComponent'
 
 const menu = (props) => {
   const items = [
+    // {
+    //   name: 'Home Page',
+    //   isActive: props.location.pathname === '/',
+    //   onClick: props.pushHomePage
+    // }, {
+    //   name: 'Todo List',
+    //   isActive: props.location.pathname === '/todolist',
+    //   onClick: props.pushTodoList
+    // },
     {
       name: 'Vote',
       isActive: props.location.pathname === '/',
@@ -13,15 +22,15 @@ const menu = (props) => {
   ]
 
   return (
-    <Menu header='Reactor' items={items} />
+    <Menu header='reactor' items={items} />
   )
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    pushHomePage: () => dispatch(push('/')),
-    pushTodoList: () => dispatch(push('/todolist')),
-    pushVote: () => dispatch(push('/vote'))
+    // pushHomePage: () => dispatch(push('/')),
+    // pushTodoList: () => dispatch(push('/todolist')),
+    pushVote: () => dispatch(push('/'))
   }
 }
 
