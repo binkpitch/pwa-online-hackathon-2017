@@ -42,10 +42,14 @@ const CandidateListComponent = (props) => {
                     disabled
                     ? <Popup
                       trigger={<Button basic color='grey' content='Vote' />}
-                      header='Not sign in'
-                      content='Please Log-in before vote.'
+                      header='Not log in'
+                      content='Please Log in first to vote.'
                   />
-                  : <Button color='green' onClick={() => props.onVoteClick(item.key)}>Vote</Button>
+                  : <Popup
+                    trigger={<Button color='green'>Vote</Button>}
+                    content={<Button basic color='green' onClick={() => props.onVoteClick(item.key)}>Confirm vote</Button>}
+                    on='click'
+                  />
                   }
                   <Button color='red'>Report</Button>
                 </div>

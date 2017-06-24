@@ -17,7 +17,7 @@ class CandidateListContainer extends Component {
       const candidates = Object.values(snapshot.val())
       this.setState({candidates})
     })
-    console.log('!!Firebase.auth().currentUser', !!Firebase.auth().currentUser)
+    console.log('Firebase.auth().currentUser', Firebase.auth().currentUser)
   }
 
   onVoteClick (candidateKey) {
@@ -29,8 +29,8 @@ class CandidateListContainer extends Component {
           } else {
             candidate.score = 1
           }
+          return candidate
         }
-        return candidate
       })
     }
   }

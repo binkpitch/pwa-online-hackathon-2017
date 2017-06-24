@@ -18,7 +18,7 @@ const votePage = () => {
         <Header.Content>
       Vote the right one
       <Header.Subheader>
-        แตะคนที่ใช่
+        โหวตคนที่ใช่
       </Header.Subheader>
         </Header.Content>
       </Header>
