@@ -1,12 +1,12 @@
 import React from 'react'
-import { Card, Icon, Image, Button, List } from 'semantic-ui-react'
+import { Card, Icon, Image, Button, List, Popup } from 'semantic-ui-react'
 
 const CandidateListComponent = (props) => {
+  const { disabled } = props
   return (
     <Card.Group>
       {
         props.items.map((item, key) => {
-          console.log('item.policy', item.policy)
           return (
             <Card key={key}>
               <Image src={item.image} height={300} />
@@ -16,7 +16,7 @@ const CandidateListComponent = (props) => {
                 </Card.Header>
                 <Card.Meta>
                   <span className='date'>
-                    {item.party}
+                    No.{item.no}-{item.party}
                   </span>
                 </Card.Meta>
                 <Card.Description>
@@ -26,21 +26,27 @@ const CandidateListComponent = (props) => {
               <Card.Content>
                 <List bulleted>
                   {
-                    item.policy.map((item1, key2) => (
-                      <List.Item key={key2}>{item1}</List.Item>
+                    item.policy.map((policyItem, policyKey) => (
+                      <List.Item key={policyKey}>{policyItem}</List.Item>
                     ))
                   }
                 </List>
               </Card.Content>
               <Card.Content extra>
-                <a>
-                  <Icon name='user' />
-                  {item.score || 0} votes
-                </a>
+                <Icon name='user' />
+                {item.score || 0} votes
               </Card.Content>
               <Card.Content extra>
                 <div className='ui two buttons'>
-                  <Button color='green'>Vote</Button>
+                  {
+                    disabled
+                    ? <Popup
+                      trigger={<Button basic color='grey' content='Vote' />}
+                      header='Not sign in'
+                      content='Please Log-in before vote.'
+                  />
+                  : <Button color='green' onClick={() => props.onVoteClick(item.key)}>Vote</Button>
+                  }
                   <Button color='red'>Report</Button>
                 </div>
               </Card.Content>
