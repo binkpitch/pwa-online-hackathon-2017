@@ -1,28 +1,148 @@
 import React from 'react'
-import { Menu, Button } from 'semantic-ui-react'
+import { Button, Confirm, Menu, Popup } from 'semantic-ui-react'
+import Firebase from 'firebase'
 
-const menu = (props) => {
-  return (
-    <Menu>
-      <Menu.Item header>{props.header}</Menu.Item>
-      {
-        props.items.map((menu, key) => (
-          <Menu.Item name={menu.name} active={menu.isActive} onClick={menu.onClick} key={key}>
-            {menu.name}
-          </Menu.Item>
-        ))
-      }
-      <Menu.Menu position='right'>
-        <Menu.Item>
-          <Button primary>Sign up</Button>
-        </Menu.Item>
+const providerGoogle = new Firebase.auth.GoogleAuthProvider();
 
-        <Menu.Item>
-          <Button>Log-in</Button>
-        </Menu.Item>
-      </Menu.Menu>
-    </Menu>
-  )
+// Facebook
+const providerFacebook = new Firebase.auth.FacebookAuthProvider()
+providerFacebook.setCustomParameters({
+  'display': 'popup'
+})
+
+type NavMenuProps = {
+  header?: string,
+  items?: array
 }
 
-export default menu
+export default class NavMenu extends React.Component {
+  props: NavMenuProps
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      profile: null,
+      openDel: false
+    }
+  }
+
+  componentDidMount() {
+    Firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          profile: user
+        })
+      }
+    });
+  }
+
+  _onClickGoogle = () => {
+    Firebase.auth().signInWithPopup(providerGoogle).then((result) => {
+      console.log('Login google success: ')
+    }).catch(function(error) {
+      console.log('Login google errors: ', error)
+    });
+  }
+
+  _onClickFacebook = () => {
+    Firebase.auth().signInWithPopup(providerFacebook).then((result) => {
+      console.log('Login facebook success: ')
+    }).catch(function(error) {
+      console.log('Login facebook errors: ', error)
+    });
+  }
+
+  _onClickLogOut = () => {
+    this.setState({
+      openDel: true
+    })
+  }
+
+  _confirmLogOut = () => {
+    Firebase.auth().signOut().then(() => {
+      localStorage.setItem('profile', null)
+      this.setState({
+        profile: null,
+        openDel: false
+      })
+    }).catch(function(error) {
+      console.log('Logout errors: ', error)
+    });
+  }
+
+  _cancelLogout = () => {
+    this.setState({
+      openDel: false
+    })
+  }
+
+  _renderAuth() {
+    const { profile } = this.state
+
+    if(profile) {
+      return (
+        <div>
+          <Button
+            color='red'
+            onClick={this._onClickLogOut}
+          >
+            Logout
+          </Button>
+          <Confirm
+            header="ยืนยันการออกจากระบบ?"
+            content={`คุณ ${profile.displayName || ''}`}
+            open={this.state.openDel}
+            onCancel={this._cancelLogout}
+            onConfirm={this._confirmLogOut}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <Popup wide trigger={<Button content='Login' />} on='click'>
+          <div className='flex1 margin-bottom-10'>
+            <Button
+              color='red'
+              content='Google'
+              icon='google'
+              labelPosition='left'
+              className='flex1'
+              onClick={this._onClickGoogle}
+            />
+          </div>
+          <div className='flex1'>
+            <Button
+              color='blue'
+              content='Facebook'
+              icon='facebook'
+              labelPosition='left'
+              className='flex1'
+              onClick={this._onClickFacebook}
+            />
+          </div>
+        </Popup>
+      )
+    }
+  }
+
+  render () {
+    return (
+      <Menu>
+        <Menu.Item header>{this.props.header}</Menu.Item>
+        {
+          this.props.items.map((menu, key) => (
+            <Menu.Item name={menu.name} active={menu.isActive} onClick={menu.onClick} key={key}>
+              {menu.name}
+            </Menu.Item>
+          ))
+        }
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            { this._renderAuth() }
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
+    )
+  }
+}
