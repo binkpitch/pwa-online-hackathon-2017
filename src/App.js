@@ -13,8 +13,8 @@ import rootSagas from './sagas'
 import Menu from './containers/menuContainer'
 
 // import your pages here
-import HomePage from './pages/homePage'
-import TodoListPage from './pages/todoListPage'
+// import HomePage from './pages/homePage'
+// import TodoListPage from './pages/todoListPage'
 import VotePage from './pages/votePage'
 
 const firebaseConfig = {
