@@ -25,11 +25,12 @@
     "react-test-renderer": "^15.5.4",
     "redux-devtools-extension": "^2.13.2",
     "redux-immutable-state-invariant": "^2.0.0",
-    "standard": "^10.0.2"
+    "standard": "^10.0.2",
+    "sw-precache": "^5.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build sw-precache --config=path/to/sw-precache-config.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/standard",

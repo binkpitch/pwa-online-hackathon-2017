@@ -2,6 +2,7 @@ import React from 'react'
 import CandidateListContainer from '../containers/candidateListContainer'
 import { Header, Icon } from 'semantic-ui-react'
 import injectSheet from 'react-jss'
+import icon from './icon.png';
 
 const styles = {
   mainContainer: {
@@ -16,10 +17,11 @@ const votePage = () => {
       <Header as='h2'>
         <Icon name='hand pointer' />
         <Header.Content>
-      Vote the right one
-      <Header.Subheader>
-        โหวตคนที่ใช่
-      </Header.Subheader>
+          Vote the right one
+          <img src={icon} alt="icon"/>
+          <Header.Subheader>
+            โหวตคนที่ใช่
+          </Header.Subheader>
         </Header.Content>
       </Header>
       <CandidateListContainer />
