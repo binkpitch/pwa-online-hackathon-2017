@@ -91,7 +91,7 @@ export default class NavMenu extends React.Component {
           </Button>
           <Confirm
             header="Are you sure you want to sign out?"
-            content={`User: ${profile.displayName || ''}`}
+            content={`Current user is "${profile.displayName || ''}"`}
             open={this.state.openDel}
             onCancel={this._cancelLogout}
             onConfirm={this._confirmLogOut}
