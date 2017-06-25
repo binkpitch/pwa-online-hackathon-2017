@@ -9,13 +9,20 @@ class CandidateListContainer extends Component {
     super(props)
     this.state = {
       candidates: [],
-      currentUser: null
+      currentUser: null,
+      isOpen: true
     }
     this.onVoteClick = this.onVoteClick.bind(this)
     this.addVoteToFirebase = this.addVoteToFirebase.bind(this)
     this.addVotersToFirebase = this.addVotersToFirebase.bind(this)
     this.checkIfDuplicateVote = this.checkIfDuplicateVote.bind(this)
     this.handleCloseDuplicateVoteError = this.handleCloseDuplicateVoteError.bind(this)
+  }
+
+  componentWillMount () {
+    Firebase.database().ref('isOpen').on('value', (snapshot) => {
+      this.setState({ isOpen: snapshot.val() })
+    })
   }
 
   componentDidMount () {
@@ -184,7 +191,13 @@ class CandidateListContainer extends Component {
         {this.renderDuplicateVoteErrorModal()}
         {this.renderVotingModal()}
 
-        <CandidateListComponent items={this.state.candidates} onVoteClick={this.onVoteClick} disabled={!this.state.currentUser} />
+        <CandidateListComponent
+          items={this.state.candidates}
+          onVoteClick={this.onVoteClick}
+          disabled={!this.state.currentUser || !this.state.isOpen}
+          disabledHeader={this.state.isOpen ? 'Not log in' : 'Voting closed'}
+          disabledContent={this.state.isOpen ? 'Please Log in to vote.' : 'The election has ended.'}
+        />
       </div>
     )
   }
