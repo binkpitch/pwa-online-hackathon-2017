@@ -12,3 +12,7 @@ body {
 .margin-bottom-10 {
   margin-bottom: 10px;
 }
+
+.card-center {
+  justify-content: center;
+}

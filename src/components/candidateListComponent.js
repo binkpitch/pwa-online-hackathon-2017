@@ -3,11 +3,11 @@ import { Card, Icon, Image, Button, List, Popup } from 'semantic-ui-react'
 
 const CandidateListComponent = (props) => {
   return (
-    <Card.Group>
+    <Card.Group className="card-center">
       {
         props.items.map((item, key) => {
           return (
-            <Card key={key}>
+            <Card key={'candidates_'+key}>
               <Image src={item.image} height={300} />
               <Card.Content>
                 <Card.Header>
