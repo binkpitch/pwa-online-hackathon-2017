@@ -40,28 +40,27 @@ class App extends Component {
     this._displayNotification()
   }
 
-  _notifications() {
-    Notification.requestPermission(function(status) {
-      console.log('Notification permission status:', status);
-    });
+  _notifications () {
+    Notification.requestPermission(function (status) {
+      console.log('Notification permission status:', status)
+    })
   }
 
-  _displayNotification() {
+  _displayNotification () {
     if (Notification.permission === 'granted') {
       Firebase.database().ref('isOpen').on('value', (openData) => {
         // const isOpen = openData.val();
 
         // if(!isOpen) {
-        if(true) {
+        if (true) {
           Firebase.database().ref('candidates').once('value', (candData) => {
-            let candidates = candData.val();
+            let candidates = candData.val()
 
-            if(candidates && candidates.length > 0) {
-              candidates = candidates.sort(function(a, b){return b.score-a.score});
-
+            if (candidates && candidates.length > 0) {
+              candidates = candidates.sort(function (a, b) { return b.score - a.score })
               this._sendNotifications(candidates)
             }
-          });
+          })
         }
       })
     }
