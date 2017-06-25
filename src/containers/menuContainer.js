@@ -27,7 +27,7 @@ const menu = (props) => {
   ]
 
   return (
-    <Menu header='reactor' items={items} />
+    <Menu items={items} />
   )
 }
 

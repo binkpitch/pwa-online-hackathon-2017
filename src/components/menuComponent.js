@@ -127,7 +127,6 @@ export default class NavMenu extends React.Component {
   render () {
     return (
       <Menu>
-        <Menu.Item header>{this.props.header}</Menu.Item>
         {
           this.props.items.map((menu, key) => (
             <Menu.Item name={menu.name} active={menu.isActive} onClick={menu.onClick} key={key}>
@@ -140,7 +139,7 @@ export default class NavMenu extends React.Component {
               this.state.profile
               ? (
                   <Menu.Item>
-                    {this.state.profile.displayName} 
+                    {this.state.profile.displayName.slice(0, 9)}... 
                   </Menu.Item>
                 )
               : null
