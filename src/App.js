@@ -34,6 +34,50 @@ class App extends Component {
     Firebase.initializeApp(firebaseConfig)
   }
 
+  componentDidMount () {
+    // notifications
+    this._notifications()
+    this._displayNotification()
+  }
+
+  _notifications() {
+    Notification.requestPermission(function(status) {
+      console.log('Notification permission status:', status);
+    });
+  }
+
+  _displayNotification() {
+    if (Notification.permission === 'granted') {
+      Firebase.database().ref('isOpen').on('value', (openData) => {
+        // const isOpen = openData.val();
+
+        // if(!isOpen) {
+        if(true) {
+          Firebase.database().ref('candidates').once('value', (candData) => {
+            let candidates = candData.val();
+
+            if(candidates && candidates.length > 0) {
+              candidates = candidates.sort(function(a, b){return b.score-a.score});
+
+              navigator.serviceWorker.getRegistration().then((reg) => {
+                var options = {
+                  body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
+                  icon: './icon192.png',
+                  vibrate: [100, 50, 100],
+                  data: {
+                    dateOfArrival: Date.now(),
+                    primaryKey: 1
+                  }
+                };
+                reg.showNotification('Election Voting Platform', options);
+              });
+            }
+          });
+        }
+      })
+    }
+  }
+
   render () {
     return (
       <ConnectedRouter history={routerHistory}>
