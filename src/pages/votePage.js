@@ -16,7 +16,7 @@ const votePage = () => {
       <Header as='h2'>
         <Icon name='hand pointer' />
         <Header.Content>
-      Press to vote
+      Vote the right one
       <Header.Subheader>
         แตะคนที่ใช่
       </Header.Subheader>
