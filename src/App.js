@@ -16,6 +16,7 @@ import Menu from './containers/menuContainer'
 // import HomePage from './pages/homePage'
 // import TodoListPage from './pages/todoListPage'
 import VotePage from './pages/votePage'
+import ResultPage from './pages/resultPage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDU3HxQOtgg0chbgVKd5RbrmiZNTCvcqYQ',
@@ -40,7 +41,8 @@ class App extends Component {
           <Route path='/' component={Menu} />
           {/* <Route exact path='/' component={HomePage} />
           <Route path='/todolist' component={TodoListPage} /> */}
-          <Route path='/' component={VotePage} />
+          <Route exact path='/' component={VotePage} />
+          <Route path='/result' component={ResultPage} />
         </div>
       </ConnectedRouter>
     )

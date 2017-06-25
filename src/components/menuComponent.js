@@ -61,7 +61,6 @@ export default class NavMenu extends React.Component {
 
   _confirmLogOut = () => {
     Firebase.auth().signOut().then(() => {
-      localStorage.setItem('profile', null)
       this.setState({
         profile: null,
         openDel: false
@@ -126,7 +125,6 @@ export default class NavMenu extends React.Component {
   }
 
   render () {
-    console.log('this.state.profile', this.state.profile)
     return (
       <Menu>
         <Menu.Item header>{this.props.header}</Menu.Item>
