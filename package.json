@@ -17,7 +17,8 @@
     "redux-form": "^6.8.0",
     "redux-saga": "^0.15.0",
     "semantic-ui-css": "^2.2.10",
-    "semantic-ui-react": "^0.68.5"
+    "semantic-ui-react": "^0.68.5",
+    "workbox-sw": "^1.0.1"
   },
   "devDependencies": {
     "enzyme": "^2.8.2",
@@ -31,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build sw-precache --config=path/to/sw-precache-config.js",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/standard",
