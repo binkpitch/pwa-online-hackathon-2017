@@ -58,7 +58,6 @@ const CandidateListComponent = props => {
                 >
                   Report
                 </Button>
-                {' '}
               </div>
             </Card.Content>
           </Card>

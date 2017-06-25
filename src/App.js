@@ -17,10 +17,7 @@ import Menu from './containers/menuContainer'
 // import TodoListPage from './pages/todoListPage'
 import VotePage from './pages/votePage'
 import ResultPage from './pages/resultPage'
-
 import ComplainPage from './pages/candidateComplainPage'
-
-import ResultPage from './pages/resultPage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDU3HxQOtgg0chbgVKd5RbrmiZNTCvcqYQ',
@@ -70,11 +67,9 @@ class App extends Component {
     }
   }
 
-
-  _sendNotifications(candidates) {
+  _sendNotifications (candidates) {
     navigator.serviceWorker.getRegistration().then((reg) => {
-      if(reg) {
-
+      if (reg) {
         var options = {
           body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
           icon: './icon192.png',
@@ -84,10 +79,10 @@ class App extends Component {
             primaryKey: 1
           }
 
-        };
-        reg.showNotification('Election Voting Platform', options);
+        }
+        reg.showNotification('Election Voting Platform', options)
       }
-    });
+    })
 
   }
 
@@ -96,9 +91,7 @@ class App extends Component {
       <ConnectedRouter history={routerHistory}>
         <div>
           <Route path='/' component={Menu} />
-
           <Route path='/complain/:id' component={ComplainPage} />
-
           <Route exact path='/' component={VotePage} />
           <Route path='/result' component={ResultPage} />
         </div>
