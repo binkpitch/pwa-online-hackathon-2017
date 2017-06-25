@@ -60,16 +60,18 @@ class App extends Component {
               candidates = candidates.sort(function(a, b){return b.score-a.score});
 
               navigator.serviceWorker.getRegistration().then((reg) => {
-                var options = {
-                  body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
-                  icon: './icon192.png',
-                  vibrate: [100, 50, 100],
-                  data: {
-                    dateOfArrival: Date.now(),
-                    primaryKey: 1
-                  }
-                };
-                reg.showNotification('Election Voting Platform', options);
+                if(reg) {
+                  var options = {
+                    body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
+                    icon: './icon192.png',
+                    vibrate: [100, 50, 100],
+                    data: {
+                      dateOfArrival: Date.now(),
+                      primaryKey: 1
+                    }
+                  };
+                  reg.showNotification('Election Voting Platform', options);
+                }
               });
             }
           });
