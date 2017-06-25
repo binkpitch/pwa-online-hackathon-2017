@@ -194,7 +194,10 @@ class CandidateListContainer extends Component {
         <CandidateListComponent
           items={this.state.candidates}
           onVoteClick={this.onVoteClick}
+<<<<<<< HEAD
           onReportPress={}
+=======
+>>>>>>> 53037067dd5c741643dbc7fc8af36bb2e7d938d1
           disabled={!this.state.currentUser || !this.state.isOpen}
           disabledHeader={this.state.isOpen ? 'Not log in' : 'Voting closed'}
           disabledContent={this.state.isOpen ? 'Please Log in to vote.' : 'The election has ended.'}

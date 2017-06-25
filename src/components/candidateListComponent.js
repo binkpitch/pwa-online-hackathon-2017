@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Image, List, Popup, Icon, Button} from 'semantic-ui-react'
+import { Card, Image, List, Popup, Icon, Button } from 'semantic-ui-react'
 
 const CandidateListComponent = props => {
   return (
@@ -57,7 +57,7 @@ const CandidateListComponent = props => {
                   onClick={() => props.onReportPress(item.key)}
                 >
                   Report
-                </Button>{' '}
+                </Button>
                 {' '}
               </div>
             </Card.Content>
