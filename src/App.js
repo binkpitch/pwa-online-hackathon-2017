@@ -59,25 +59,29 @@ class App extends Component {
             if(candidates && candidates.length > 0) {
               candidates = candidates.sort(function(a, b){return b.score-a.score});
 
-              navigator.serviceWorker.getRegistration().then((reg) => {
-                if(reg) {
-                  var options = {
-                    body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
-                    icon: './icon192.png',
-                    vibrate: [100, 50, 100],
-                    data: {
-                      dateOfArrival: Date.now(),
-                      primaryKey: 1
-                    }
-                  };
-                  reg.showNotification('Election Voting Platform', options);
-                }
-              });
+              this._sendNotifications(candidates)
             }
           });
         }
       })
     }
+  }
+
+  _sendNotifications(candidates) {
+    navigator.serviceWorker.getRegistration().then((reg) => {
+      if(reg) {
+        var options = {
+          body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
+          icon: './icon192.png',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          }
+        };
+        reg.showNotification('Election Voting Platform', options);
+      }
+    });
   }
 
   render () {
