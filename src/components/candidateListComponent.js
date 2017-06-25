@@ -1,14 +1,13 @@
 import React from 'react'
-import { Card, Icon, Image, Button, List, Popup } from 'semantic-ui-react'
+import {Card, Image, List, Popup, Icon, Button} from 'semantic-ui-react'
 
 const CandidateListComponent = props => {
-  const { disabled } = props
   return (
-    <Card.Group>
+    <Card.Group className='card-center'>
       {props.items.map((item, key) => {
         return (
-          <Card key={key}>
-            <Image src={item.image} height={300} />
+          <Card key={'candidates_' + key}>
+            <Image alt={item.name} src={item.image} height={300} />
             <Card.Content>
               <Card.Header>
                 {item.name}
@@ -35,21 +34,31 @@ const CandidateListComponent = props => {
             </Card.Content>
             <Card.Content extra>
               <div className='ui two buttons'>
-                {disabled
+                {props.disabled
                   ? <Popup
                     trigger={<Button basic color='grey' content='Vote' />}
-                    header='Not sign in'
-                    content='Please Log-in before vote.'
+                    header={props.disabledHeader}
+                    content={props.disabledContent}
                     />
                   : <Button
                     color='green'
-                    onClick={() => props.onVoteClick(item.key)}
+                    onClick={() =>
+                        props.onVoteClick(
+                          item.key,
+                          item.name,
+                          item.no,
+                          item.party
+                        )}
                     >
                       Vote
                     </Button>}
-                <Button color='red' onClick={() => props.onReportPress(item.key)}>
+                <Button
+                  color='red'
+                  onClick={() => props.onReportPress(item.key)}
+                >
                   Report
-                </Button>
+                </Button>{' '}
+                {' '}
               </div>
             </Card.Content>
           </Card>

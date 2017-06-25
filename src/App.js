@@ -13,10 +13,13 @@ import rootSagas from './sagas'
 import Menu from './containers/menuContainer'
 
 // import your pages here
-import HomePage from './pages/homePage'
-import TodoListPage from './pages/todoListPage'
+// import HomePage from './pages/homePage'
+// import TodoListPage from './pages/todoListPage'
 import VotePage from './pages/votePage'
+
 import ComplainPage from './pages/candidateComplainPage'
+
+import ResultPage from './pages/resultPage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDU3HxQOtgg0chbgVKd5RbrmiZNTCvcqYQ',
@@ -34,15 +37,63 @@ class App extends Component {
     Firebase.initializeApp(firebaseConfig)
   }
 
+  componentDidMount () {
+    // notifications
+    this._notifications()
+    this._displayNotification()
+  }
+
+  _notifications () {
+    Notification.requestPermission(function (status) {
+      console.log('Notification permission status:', status)
+    })
+  }
+
+  _displayNotification () {
+    if (Notification.permission === 'granted') {
+      Firebase.database().ref('isOpen').on('value', (openData) => {
+        // const isOpen = openData.val();
+
+        // if(!isOpen) {
+        if (true) {
+          Firebase.database().ref('candidates').once('value', (candData) => {
+            let candidates = candData.val()
+
+            if (candidates && candidates.length > 0) {
+              candidates = candidates.sort(function (a, b) { return b.score - a.score })
+              this._sendNotifications(candidates)
+            }
+          })
+        }
+      })
+    }
+  }
+
+  _sendNotifications (candidates) {
+    navigator.serviceWorker.getRegistration().then((reg) => {
+      if (reg) {
+        var options = {
+          body: `Winner is ${candidates[0].name || ''} score ${candidates[0].score || 0}`,
+          icon: './icon192.png',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          }
+        }
+        reg.showNotification('Election Voting Platform', options)
+      }
+    })
+  }
+
   render () {
     return (
       <ConnectedRouter history={routerHistory}>
         <div>
           <Route path='/' component={Menu} />
-          <Route exact path='/' component={HomePage} />
-          <Route path='/todolist' component={TodoListPage} />
-          <Route path='/vote' component={VotePage} />
           <Route path='/complain/:id' component={ComplainPage} />
+          <Route exact path='/' component={VotePage} />
+          <Route path='/result' component={ResultPage} />
         </div>
       </ConnectedRouter>
     )

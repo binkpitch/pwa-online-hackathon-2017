@@ -1,0 +1,15 @@
+{
+  "short_name": "Vote",
+  "name": "Vote",
+  "icons": [
+    {
+      "src": "icon1200.png",
+      "sizes": "1200x1200",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#EEEEEE",
+  "background_color": "#ffffff"
+}

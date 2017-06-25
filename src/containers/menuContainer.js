@@ -3,38 +3,27 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Menu from '../components/menuComponent'
 
-const menu = (props) => {
+const menu = props => {
   const items = [
     {
-      name: 'Home Page',
-      isActive: props.location.pathname === '/',
-      onClick: props.pushHomePage
-    }, {
-      name: 'Todo List',
-      isActive: props.location.pathname === '/todolist',
-      onClick: props.pushTodoList
-    }, {
       name: 'Vote',
-      isActive: props.location.pathname === '/vote',
+      isActive: props.location.pathname === '/',
       onClick: props.pushVote
-    }, {
-      name: 'Complain',
-      isActive: props.location.pathname === '/complain',
-      onClick: props.pushComplain
+    },
+    {
+      name: 'Result',
+      isActive: props.location.pathname === '/result',
+      onClick: props.pushResult
     }
   ]
 
-  return (
-    <Menu header='Reactor' items={items} />
-  )
+  return <Menu items={items} />
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    pushHomePage: () => dispatch(push('/')),
-    pushTodoList: () => dispatch(push('/todolist')),
-    pushVote: () => dispatch(push('/vote')),
-    pushComplain: (id) => dispatch(push('/complain/' + id))
+    pushVote: () => dispatch(push('/')),
+    pushResult: () => dispatch(push('/result'))
   }
 }
 

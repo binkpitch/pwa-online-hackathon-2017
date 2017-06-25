@@ -16,10 +16,10 @@ const votePage = () => {
       <Header as='h2'>
         <Icon name='hand pointer' />
         <Header.Content>
-      Vote the right one
-      <Header.Subheader>
-        แตะคนที่ใช่
-      </Header.Subheader>
+          Vote the right one
+          <Header.Subheader>
+            โหวตคนที่ใช่
+          </Header.Subheader>
         </Header.Content>
       </Header>
       <CandidateListContainer />
